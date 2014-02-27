@@ -86,7 +86,7 @@
           test: window.Hogan,
           nope: '//twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js',
         }, {
-          load: [host + '/css/auctionet-embed.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
+          load: [host + '/css/auctionet-embed.1.0.min.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
           complete: function () {
             jQuery(function() {
               auctioNet.embed(options);
