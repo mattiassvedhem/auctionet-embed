@@ -5,7 +5,7 @@
 (function (window) {
   "use strict";
 
-  var host = 'http://localhost/auctionet-embedd';
+  var host = 'http://localhost/auctionet-embed';
 
   var locales = {
     en: {
@@ -86,17 +86,17 @@
           test: window.Hogan,
           nope: '//twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js',
         }, {
-          load: [host + '/css/auctionet-embedd.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
+          load: [host + '/css/auctionet-embed.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
           complete: function () {
             jQuery(function() {
-              auctioNet.embedd(options);
+              auctioNet.embed(options);
             });
           }
         }]);
 
     },
 
-    embedd : function(options) {
+    embed : function(options) {
       var document = window.document,
           $ = jQuery;
 
@@ -115,7 +115,7 @@
       var compiledTemplate = Hogan.compile(template);
       var renderedTemplate = compiledTemplate.render(data);
 
-      $("#auctioNetEmbedd").after(renderedTemplate)
+      $("#auctioNetEmbed").after(renderedTemplate)
 
       $('#auctioNetButtons a:not(.all)').click(_.bind(this.onClickObjectButton, this));
 
