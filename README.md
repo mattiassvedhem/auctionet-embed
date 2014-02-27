@@ -1,4 +1,4 @@
-# Auctionet Embedd
+# Auctionet Embed
 
 ## Quick start
 Add the script file in the ```<head>``` section.
