@@ -5,7 +5,9 @@
 (function (window) {
   "use strict";
 
-  var host = '//auctionet.com/assets/public';
+  var host = 'http://mattiassvedhem.com/auctionet-embed';
+
+  // var host = '//auctionet.com/assets/public/auctionet-embed';
 
   var locales = {
     en: {
@@ -15,6 +17,8 @@
       min: 'min',
       price: 'Starting price',
       time: 'Time left',
+      bids: 'Bids',
+      bid: 'Bid',
       no_objects_found: 'No objects where found',
       heading: 'Some heading for the module',
       popularItems: 'Popular items',
@@ -29,6 +33,8 @@
       min: 'min',
       price: 'Schätzwert',
       time: 'Restzeit',
+      bids: 'Gebote',
+      bid: 'Gebot',
       no_objects_found: 'Keine Objekte gefunden, wo',
       heading: 'Bald endende Artikel aus unseren täglichen OnlineAuktionen bei',
       popularItems: 'Letztes Gebot auf',
@@ -43,6 +49,8 @@
       min: 'minuter',
       price: 'Utgångspris',
       time: 'Tid kvar',
+      bids: 'Bud',
+      bid: 'Bud',
       no_objects_found: 'Inga objekt hittades',
       heading: 'Någon rubrik för widgeten',
       popularItems: 'Populära föremål',
@@ -56,12 +64,12 @@
     defaults : {
       companyId: null,
       backgroundColors: {
-        image: '#f5f5f5',
-        meta: '#f5f5f5'
+        image: '#ececec',
+        meta: '#ececec'
       },
       textColors: {
         itemId: '#000',
-        link: '#8a8b87',
+        link: '#252525',
         heading: '#000',
         priceHeading: '#5d5d5d',
         priceValue: '#5d5d5d',
@@ -69,7 +77,7 @@
         timeValue: '#5d5d5d'
       },
       locale: 'sv',
-      howManyItems: 4,
+      howManyItems: 5,
       initialFilter: 'bid_on'
     },
 
@@ -87,7 +95,7 @@
           test: window.Hogan,
           nope: '//twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js',
         }, {
-          load: [host + '/css/auctionet-embed.1.0.min.css?v1', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
+          load: [host + '/css/auctionet-embed.1.0.1.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600.css'],
           complete: function () {
             jQuery(function() {
               auctioNet.embed(options);
@@ -111,7 +119,7 @@
       }
 
       // TODO: Precompile with hulk.
-      var template = '<div id="auctioNetWrapper"><div id="auctioNetHeader"><h2 style="color: {{textColors.heading}}">{{text.heading}}</h2><a href="{{linkUrl}}"><img src="{{host}}/img/logo.jpg" width="30%" height="30%" /></a></div><ul id="external-objects"></ul><div id="auctioNetButtons"><a href="javascript:void(0)" rel="bid_on" class="objects-btn active">{{text.popularItems}}</a><a href="javascript:void(0)" rel="recent" class="objects-btn">{{text.lastestItems}}</a><a href="javascript:void(0)" rel="ending" class="objects-btn">{{text.endingSoon}}</a><span class="button-divider"> | </span><a href="{{url}}" class="objects-btn all">{{text.seeAll}}</a></div></div></div>';
+      var template = '<div id="auctioNetWrapper"><div id="auctioNetHeader"><h2 style="color: {{textColors.heading}}">{{text.heading}}</h2><a href="{{linkUrl}}"><img src="{{host}}/img/logo.jpg" width="26%" height="26%" /></a></div><ul id="external-objects"></ul><div id="auctioNetButtons"><a href="javascript:void(0)" rel="bid_on" class="objects-btn active">{{text.popularItems}}</a><a href="javascript:void(0)" rel="recent" class="objects-btn">{{text.lastestItems}}</a><a href="javascript:void(0)" rel="ending" class="objects-btn">{{text.endingSoon}}</a><span class="button-divider"> | </span><a href="{{url}}" class="objects-btn all">{{text.seeAll}}</a></div></div></div>';
       var compiledTemplate = Hogan.compile(template);
       var renderedTemplate = compiledTemplate.render(data);
 
@@ -151,20 +159,36 @@
       var data = {
         imageUrl: object.images[0].thumb,
         id: object.id,
-        title: object.title.length > 54 ? object.title.substring(0, 54) + '...' : object.title,
+        title: object.title.length > 36 ? object.title.substring(0, 36) + '...' : object.title,
         url: object.url,
-        price: object.estimate + ' ' + object.currency,
+        price: this.priceValue(object),
         endsIn: this.timeDifference(new Date(), new Date(object.ends_at * 1000)),
-        priceText: locales[this.settings.locale].price,
+        priceText: this.priceText(object),
         timeText: locales[this.settings.locale].time,
         textColors: this.settings.textColors,
         backgroundColors: this.settings.backgroundColors
       }
 
       // TODO: Precompile with hulk.
-      var template = '<li><div class="object-image" style="background-color: {{backgroundColors.image}}"><a href="{{url}}"><img src="{{imageUrl}}" alt="{{title}}" /></a></div><a class="object-link" href="{{url}}" style="color: {{textColors.link}}"><strong style="color: {{textColors.itemId}}">{{id}}</strong> {{title}}</a><dl style="background-color: {{backgroundColors.meta}}"><dt class="border" style="color: {{textColors.priceHeading}}">{{priceText}}</dt><dd class="border" style="color: {{textColors.priceValue}}">{{price}}</dd><dt style="color: {{textColors.timeHeading}}">{{timeText}}</dt><dd style="color: {{textColors.timeValue}}">{{endsIn}}</dd></dl></li>';
+      var template = '<li><div class="object-image" style="background-color: {{backgroundColors.image}}"><a href="{{url}}"><img src="{{imageUrl}}" alt="{{title}}" /></a></div><a class="object-link" href="{{url}}" style="color: {{textColors.link}}"><strong style="color: {{textColors.itemId}}">{{id}}.</strong> {{title}}</a><dl style="background-color: {{backgroundColors.meta}}"><dt class="border" style="color: {{textColors.priceHeading}}">{{priceText}}</dt><dd class="border" style="color: {{textColors.priceValue}}">{{price}}</dd><dt style="color: {{textColors.timeHeading}}">{{timeText}}</dt><dd style="color: {{textColors.timeValue}}">{{endsIn}}</dd></dl></li>';
       var compiledTemplate = Hogan.compile(template);
       return compiledTemplate.render(data);
+    },
+
+    priceValue : function(object) {
+      if (object.bids.length > 0) {
+        return object.bids[0].amount + ' ' + object.currency
+      } else {
+        return object.estimate + ' ' + object.currency
+      }
+    },
+
+    priceText : function(object) {
+      if (object.bids.length > 0) {
+        return object.bids.length + ' ' + (object.bids.length > 1 ? locales[this.settings.locale].bids : locales[this.settings.locale].bid)
+      } else {
+        return locales[this.settings.locale].price
+      }
     },
 
     displayNoObjectsFound : function (response) {
