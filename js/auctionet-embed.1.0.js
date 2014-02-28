@@ -5,7 +5,7 @@
 (function (window) {
   "use strict";
 
-  var host = 'http://mattiassvedhem.com/auctionet-embed';
+  var host = '//auctionet.com/assets/public';
 
   var locales = {
     en: {
@@ -31,8 +31,8 @@
       time: 'Restzeit',
       no_objects_found: 'Keine Objekte gefunden, wo',
       heading: 'Bald endende Artikel aus unseren täglichen OnlineAuktionen bei',
-      popularItems: 'Beliebte artikel',
-      lastestItems: 'Neueste artikel',
+      popularItems: 'Letztes Gebot auf',
+      lastestItems: 'Zuletzt eingestellt',
       endingSoon: 'bald endend',
       seeAll: 'Alle ansehen'
     },
