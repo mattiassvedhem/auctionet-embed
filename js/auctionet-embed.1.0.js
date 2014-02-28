@@ -5,7 +5,7 @@
 (function (window) {
   "use strict";
 
-  var host = 'http://localhost/auctionet-embed';
+  var host = 'http://mattiassvedhem.com/auctionet-embed';
 
   var locales = {
     en: {
@@ -69,7 +69,8 @@
         timeValue: '#5d5d5d'
       },
       locale: 'sv',
-      howManyItems: 4
+      howManyItems: 4,
+      initialFilter: 'bid_on'
     },
 
     init : function (options) {
@@ -86,14 +87,13 @@
           test: window.Hogan,
           nope: '//twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js',
         }, {
-          load: [host + '/css/auctionet-embed.1.0.min.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
+          load: [host + '/css/auctionet-embed.1.0.min.css?v1', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600'],
           complete: function () {
             jQuery(function() {
               auctioNet.embed(options);
             });
           }
         }]);
-
     },
 
     embed : function(options) {
@@ -118,9 +118,10 @@
       $("#auctioNetEmbed").after(renderedTemplate)
 
       $('#auctioNetButtons a:not(.all)').click(_.bind(this.onClickObjectButton, this));
-
+      $("#auctioNetButtons a[rel=" + this.settings.initialFilter + "]").trigger('click');
+      
       this.externalObjects = $('#external-objects')
-      this.loadExternalObjects('bid_on')
+      this.loadExternalObjects(this.settings.initialFilter)
     },
 
     timeDifference : function (date1, date2) {
@@ -206,7 +207,7 @@
       e.preventDefault();
 
       var self = $(e.target),
-          filter = self.attr('rel');
+           filter = self.attr('rel');
 
       self.addClass('active');
       self.siblings(':not(.all)').removeClass('active');
