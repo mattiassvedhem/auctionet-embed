@@ -124,3 +124,54 @@ div#auctioNetWrapper #external-objects .border {
   padding-bottom: 2px;
   margin-bottom: 5px;
 }
+
+@media all and (max-width: 810px) and (min-width: 500px) {
+  div#auctioNetWrapper #auctioNetHeader h2 {
+    padding: 0;
+  }
+
+  div#auctioNetWrapper #auctioNetHeader img {
+    width: 30%;
+    height: auto;
+  }
+
+  div#auctioNetWrapper li {
+    width: 30%;
+    padding: 1.665%;
+  }  
+}
+
+@media all and (max-width: 500px) {
+  div#auctioNetWrapper #auctioNetHeader {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #f5f5f5;
+    text-align: center;
+  }
+
+  div#auctioNetWrapper #auctioNetHeader h2 {
+    margin-bottom: 1em;
+    float: none;
+  }
+
+  div#auctioNetWrapper #auctioNetHeader img {
+    float: none;
+    width: 80%;
+    height: auto;
+  }
+
+  div#auctioNetWrapper li {
+    float: none;
+    width: 97%;
+    padding: 1.5%;
+    margin-bottom: 1em;
+  }
+
+  div#auctioNetWrapper #external-objects .object-link, div#auctioNetWrapper #external-objects .object-link:active, div#auctioNetWrapper #external-objects .object-link:visited {
+    height: auto;
+  }
+
+  div#auctioNetWrapper #auctioNetButtons a, div#auctioNetWrapper #auctioNetButtons .button-divider {
+    margin-left: 5px;
+  }
+}
