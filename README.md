@@ -10,12 +10,12 @@ Add the script file in the ```<head>``` section.
 Then add the embedd code wherever you want the widget:
 
 ```
-  <script id='auctioNetEmbed'>
-    auctioNet.init({
-      companyId: 52,
-      locale: 'de',
-    });
-  </script>
+<script id='auctioNetEmbed'>
+  auctioNet.init({
+    companyId: 52,
+    locale: 'de'
+  });
+</script>
 ```
 
 ## Options
@@ -37,10 +37,10 @@ The text heading for the widget
 These options are passed a JSON object :
 
 ```
-  backgroundColors: {
-    image: '#ececec',
-    meta: '#ececec'
-  }
+backgroundColors: {
+  image: '#ececec',
+  meta: '#ececec'
+}
 ```
 
 * ```image``` - The background color behind the image.
