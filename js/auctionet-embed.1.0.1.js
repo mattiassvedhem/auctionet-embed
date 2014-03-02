@@ -62,6 +62,7 @@
   window.auctioNet = {
     defaults : {
       companyId: null,
+      heading: null,
       backgroundColors: {
         image: '#ececec',
         meta: '#ececec'
@@ -113,17 +114,19 @@
             $ = jQuery;
             
       this.settings = _.defaults(options, this.defaults);
+      this.setHeading();
 
       var data = {
         url: this.buildLinkUrl(),
         textColors: this.settings.textColors,
         text: locales[this.settings.locale],
+        heading: this.settings.heading,
         host: host,
         linkUrl: this.buildLinkUrl()
       }
 
       // TODO: Precompile with hulk.
-      var template = '<div id="auctioNetWrapper"><div id="auctioNetHeader"><h2 style="color: {{textColors.heading}}">{{text.heading}}</h2><a href="{{linkUrl}}"><img src="{{host}}/img/logo.jpg" width="26%" height="26%" /></a></div><ul id="external-objects"></ul><div id="auctioNetButtons"><a href="javascript:void(0)" rel="bid_on" class="objects-btn active">{{text.popularItems}}</a><a href="javascript:void(0)" rel="recent" class="objects-btn">{{text.lastestItems}}</a><a href="javascript:void(0)" rel="ending" class="objects-btn">{{text.endingSoon}}</a><span class="button-divider"> | </span><a href="{{url}}" class="objects-btn all">{{text.seeAll}}</a></div></div></div>';
+      var template = '<div id="auctioNetWrapper"><div id="auctioNetHeader"><h2 style="color: {{textColors.heading}}">{{heading}}</h2><a href="{{linkUrl}}"><img src="{{host}}/img/logo.jpg" width="26%" height="26%" /></a></div><ul id="external-objects"></ul><div id="auctioNetButtons"><a href="javascript:void(0)" rel="bid_on" class="objects-btn active">{{text.popularItems}}</a><a href="javascript:void(0)" rel="recent" class="objects-btn">{{text.lastestItems}}</a><a href="javascript:void(0)" rel="ending" class="objects-btn">{{text.endingSoon}}</a><span class="button-divider"> | </span><a href="{{url}}" class="objects-btn all">{{text.seeAll}}</a></div></div></div>';
       var compiledTemplate = Hogan.compile(template);
       var renderedTemplate = compiledTemplate.render(data);
 
@@ -134,6 +137,14 @@
       
       this.externalObjects = $('#external-objects')
       this.loadExternalObjects(this.settings.initialFilter)
+    },
+
+    setHeading : function() {
+      if (this.settings.heading === null) {
+        this.settings.heading = locales[this.settings.locale].heading
+      } else {
+        return
+      }
     },
 
     timeDifference : function (date1, date2) {
