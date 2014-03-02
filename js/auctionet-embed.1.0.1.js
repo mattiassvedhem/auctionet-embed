@@ -5,9 +5,8 @@
 (function (window) {
   "use strict";
 
-  var host = 'http://mattiassvedhem.com/auctionet-embed';
-
-  // var host = '//auctionet.com/assets/public/auctionet-embed';
+  var scriptTag = '',
+        host = '';
 
   var locales = {
     en: {
@@ -82,7 +81,7 @@
     },
 
     init : function (options) {
-      auctioNet = this;
+      var auctioNet = this;
 
       // TODO: Implement DOM-ready to catch later loaded jQuery.
       yepnope([{
@@ -94,20 +93,25 @@
         }, {
           test: window.Hogan,
           nope: '//twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js',
-        }, {
-          load: [host + '/css/auctionet-embed.1.0.1.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600.css'],
           complete: function () {
             jQuery(function() {
+              scriptTag = jQuery("#auctioNetEmbedScript"),
+              host = scriptTag.data('host');
+              
               auctioNet.embed(options);
+
+              yepnope([{
+                load: [host + '/css/auctionet-embed.1.0.1.css', '//fonts.googleapis.com/css?family=Open+Sans:300italic,300,600.css'],
+              }]);
             });
           }
         }]);
-    },
+    },  
 
     embed : function(options) {
       var document = window.document,
-          $ = jQuery;
-
+            $ = jQuery;
+            
       this.settings = _.defaults(options, this.defaults);
 
       var data = {
@@ -123,7 +127,7 @@
       var compiledTemplate = Hogan.compile(template);
       var renderedTemplate = compiledTemplate.render(data);
 
-      $("#auctioNetEmbed").after(renderedTemplate)
+      $('#auctioNetEmbed').after(renderedTemplate);
 
       $('#auctioNetButtons a:not(.all)').click(_.bind(this.onClickObjectButton, this));
       $("#auctioNetButtons a[rel=" + this.settings.initialFilter + "]").trigger('click');
