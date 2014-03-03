@@ -16,6 +16,9 @@ div#auctioNetWrapper #auctioNetHeader h2 {
 }
 
 div#auctioNetWrapper #auctioNetHeader img {
+  width: 300px;
+  height: auto;
+  float: right;
   float: right;
 }
 
@@ -131,7 +134,7 @@ div#auctioNetWrapper #external-objects .border {
   }
 
   div#auctioNetWrapper #auctioNetHeader img {
-    width: 30%;
+    width: 200px;
     height: auto;
   }
 
@@ -156,8 +159,7 @@ div#auctioNetWrapper #external-objects .border {
 
   div#auctioNetWrapper #auctioNetHeader img {
     float: none;
-    width: 80%;
-    height: auto;
+    width: 300px;
   }
 
   div#auctioNetWrapper li {
